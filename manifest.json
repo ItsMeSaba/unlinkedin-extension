@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedOut - Post Filter",
+  "version": "1.0",
+  "description": "Hide flexing and job-hunting posts from LinkedIn.",
+  "permissions": ["scripting", "activeTab", "storage"],
+  "host_permissions": ["https://www.linkedin.com/*"],
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/feed/"],
+      "js": ["dist/index.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
