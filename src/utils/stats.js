@@ -9,7 +9,9 @@ function createStatsButton() {
   const button = document.createElement("div");
   button.id = "linkedout-stats";
   button.innerHTML = `
-    <span class="logo">L</span>
+    <img src="${chrome.runtime.getURL(
+      "src/assets/linkedout-32.png"
+    )}" class="logo" alt="LinkedOut" />
     <span class="stats">A: ${stats.analyzed} H: ${stats.hidden}</span>
   `;
   button.title = `LinkedOut Stats\nAnalyzed: ${stats.analyzed} posts\nHidden: ${stats.hidden} posts`;
@@ -62,9 +64,9 @@ style.textContent = `
   }
 
   #linkedout-stats .logo {
-    font-weight: bold;
-    font-size: 16px;
-    color: #0a66c2;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
   }
 
   #linkedout-stats .stats {
