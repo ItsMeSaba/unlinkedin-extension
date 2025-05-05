@@ -1,5 +1,5 @@
 import { postSelector } from "../data/selectors";
-import { analyzePost } from "./analyze-post";
+import { analyzePosts } from "./analyze-post";
 import { hidePost } from "./hide-post";
 
 // Set to store already checked post IDs
@@ -10,21 +10,31 @@ export async function scanFeed() {
 
   const posts = document.querySelectorAll(postSelector);
 
-  for (const post of posts) {
-    // Use data-id attribute or some unique identifier from the post
+  // Filter out already processed posts
+  const newPosts = Array.from(posts).filter((post) => {
+    const postId = generatePostId(post);
+    return !checkedPosts.has(postId);
+  });
+
+  if (newPosts.length === 0) {
+    return;
+  }
+
+  // Analyze posts in batch
+  const results = await analyzePosts(newPosts);
+
+  console.log("results", results);
+
+  // Process results
+  results.forEach(({ post, shouldHide, category }) => {
     const postId = generatePostId(post);
 
-    // Only process posts we haven't seen before
-    if (!checkedPosts.has(postId)) {
-      const { shouldHide, category } = await analyzePost(post);
-
-      if (shouldHide) {
-        hidePost(post, category);
-      }
-
-      checkedPosts.add(postId);
+    if (shouldHide) {
+      hidePost(post, category);
     }
-  }
+
+    checkedPosts.add(postId);
+  });
 }
 
 // Generate a unique identifier for posts that don't have one

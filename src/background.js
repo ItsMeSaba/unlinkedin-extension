@@ -3,11 +3,11 @@ const API_ENDPOINT = "http://localhost:3000/api/analyze";
 
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === "ANALYZE_POST") {
-    analyzePost(request.postText)
-      .then((result) => sendResponse(result))
+  if (request.type === "ANALYZE_POSTS") {
+    analyzePosts(request.posts)
+      .then((results) => sendResponse(results))
       .catch((error) => {
-        console.error("Error analyzing post:", error);
+        console.error("Error analyzing posts:", error);
         sendResponse({ error: error.message });
       });
 
@@ -16,14 +16,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-async function analyzePost(postText) {
+async function analyzePosts(posts) {
+  // Get filter preferences
+  const { filters = {} } = await chrome.storage.sync.get("filters");
+
   const response = await fetch(API_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      posts: [postText],
+      posts,
+      filters, // Send filter preferences to the API
     }),
   });
 
@@ -33,8 +37,12 @@ async function analyzePost(postText) {
 
   const data = await response.json();
   console.log("Linkedout: Result Data:", data);
-  return {
-    shouldHide: parseInt(data?.results?.[0]?.isApproved) === 0,
-    category: data?.results?.[0]?.category,
-  };
+
+  console.log("Linkedout: data.results:", data.results);
+
+  // Map API results to the format expected by the content script
+  return data.results.map((result) => ({
+    shouldHide: parseInt(result.isApproved) === 0,
+    category: result.category,
+  }));
 }
