@@ -6,7 +6,7 @@
   "permissions": ["scripting", "activeTab", "storage"],
   "host_permissions": ["https://www.linkedin.com/*"],
   "action": {
-    "default_popup": "src/popup/popup.html"
+    "default_popup": "dist/popup/popup.html"
   },
   "background": {
     "service_worker": "dist/background.js",

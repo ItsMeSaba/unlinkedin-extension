@@ -1,13 +1,14 @@
 // Handles scroll events and triggers feed scanning
-let lastScrollPosition = 1000;
+const SCROLL_THRESHOLD = 700;
+let lastScrollPosition = SCROLL_THRESHOLD;
 
 export function initializeScrollHandler(onScroll) {
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     const currentScrollPosition = window.scrollY;
-    
+
     if (currentScrollPosition > lastScrollPosition) {
-      lastScrollPosition += 1000;
+      lastScrollPosition += SCROLL_THRESHOLD;
       onScroll();
     }
   });
-} 
+}
