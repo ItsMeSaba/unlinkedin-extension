@@ -1,6 +1,8 @@
 import { postSelector } from "../data/selectors";
 import { analyzePosts } from "./analyze-post";
 import { hidePost } from "./hide-post";
+import { updateStats } from "./stats";
+import { removeAds } from "./remove-ads";
 
 // Set to store already checked post IDs
 const checkedPosts = new Set();
@@ -10,10 +12,21 @@ export async function scanFeed() {
 
   const posts = document.querySelectorAll(postSelector);
 
-  // Filter out already processed posts
+  // Filter out already processed posts and ads
   const newPosts = Array.from(posts).filter((post) => {
     const postId = generatePostId(post);
-    return !checkedPosts.has(postId);
+
+    if (checkedPosts.has(postId)) {
+      return false;
+    }
+
+    // Remove ads before analysis
+    if (removeAds(post)) {
+      return false;
+    }
+
+    checkedPosts.add(postId);
+    return true;
   });
 
   if (newPosts.length === 0) {
@@ -23,18 +36,19 @@ export async function scanFeed() {
   // Analyze posts in batch
   const results = await analyzePosts(newPosts);
 
-  console.log("results", results);
+  // Track how many posts were hidden
+  let hiddenCount = 0;
 
   // Process results
   results.forEach(({ post, shouldHide, category }) => {
-    const postId = generatePostId(post);
-
     if (shouldHide) {
       hidePost(post, category);
+      hiddenCount++;
     }
-
-    checkedPosts.add(postId);
   });
+
+  // Update stats with the number of posts analyzed and hidden
+  updateStats(newPosts.length, hiddenCount);
 }
 
 // Generate a unique identifier for posts that don't have one
