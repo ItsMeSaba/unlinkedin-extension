@@ -22,8 +22,6 @@ export async function analyzePosts(posts) {
       posts: postsData.map((p) => p.text),
     });
 
-    console.log("results from runtime", results);
-
     if (results.error) {
       throw new Error(results.error);
     }

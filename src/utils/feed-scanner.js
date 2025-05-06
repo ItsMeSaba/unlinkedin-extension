@@ -1,4 +1,8 @@
-import { postSelector } from "../data/selectors";
+import {
+  postClassName,
+  postDescriptionSelector,
+  postSelector,
+} from "../data/selectors";
 import { analyzePosts } from "./analyze-post";
 import { hidePost } from "./hide-post";
 import { updateStats } from "./stats";
@@ -10,7 +14,9 @@ const checkedPosts = new Set();
 export async function scanFeed() {
   console.log("Scanning feed...");
 
-  const posts = document.querySelectorAll(postSelector);
+  const posts = document.getElementsByClassName(postClassName);
+
+  console.log("posts", posts);
 
   // Filter out already processed posts and ads
   const newPosts = Array.from(posts).filter((post) => {
@@ -25,7 +31,10 @@ export async function scanFeed() {
       return false;
     }
 
+    // Mark post as processed and remove class
     checkedPosts.add(postId);
+    post.classList.remove(postClassName);
+    post.style.marginBottom = "8px";
     return true;
   });
 
@@ -54,5 +63,7 @@ export async function scanFeed() {
 // Generate a unique identifier for posts that don't have one
 function generatePostId(post) {
   // Use post content or position as a unique identifier
-  return `post-${post.innerText.slice(0, 20)}-${post.offsetTop}`;
+  const descriptionDiv = post.querySelector(postDescriptionSelector);
+  const postText = descriptionDiv?.innerText?.slice(0, 25) || "";
+  return `post-${postText}`;
 }

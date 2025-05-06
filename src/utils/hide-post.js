@@ -1,19 +1,17 @@
-import { postDescriptionSelector } from "../data/selectors";
-
 /**
- * Hides a post by replacing its content with removal information
+ * Hides a post by adding an overlay
  * @param {HTMLElement} post - The post element to hide
  * @param {string} category - The category/reason why post was hidden
  */
 export function hidePost(post, category = "unspecified") {
-  // Store original content for later restoration
-  const originalContent = post.innerHTML;
+  // Ensure post has relative positioning for absolute overlay
+  post.style.position = "relative";
 
-  // Create removal message element
-  const removalMessage = document.createElement("div");
-  removalMessage.className = "linkedout-removal-message";
+  // Create overlay element
+  const overlay = document.createElement("div");
+  overlay.className = "linkedout-overlay";
 
-  removalMessage.innerHTML = `
+  overlay.innerHTML = `
     <div class="linkedout-removal-content">
       <div class="linkedout-removal-icon">🚫</div>
       <div class="linkedout-removal-text">
@@ -25,33 +23,41 @@ export function hidePost(post, category = "unspecified") {
   `;
 
   // Add event listener to restore button
-  const showButton = removalMessage.querySelector(".linkedout-show-post");
+  const showButton = overlay.querySelector(".linkedout-show-post");
   showButton.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    post.innerHTML = originalContent;
+    overlay.remove();
   });
 
-  // Replace post content
-  post.innerHTML = "";
-  post.appendChild(removalMessage);
+  // Add overlay to post
+  post.appendChild(overlay);
 
   // Add styles if not already added
   if (!document.getElementById("linkedout-styles")) {
     const style = document.createElement("style");
     style.id = "linkedout-styles";
     style.textContent = `
-      .linkedout-removal-message {
-        padding: 16px;
+      .linkedout-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: #f3f6f8;
         border-radius: 8px;
-        margin: 8px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
       }
 
       .linkedout-removal-content {
         display: flex;
         align-items: center;
         gap: 12px;
+        padding: 16px;
+        max-width: 90%;
       }
 
       .linkedout-removal-icon {
@@ -87,6 +93,7 @@ export function hidePost(post, category = "unspecified") {
         font-weight: 600;
         font-size: 14px;
         transition: background-color 0.2s;
+        white-space: nowrap;
       }
 
       .linkedout-show-post:hover {

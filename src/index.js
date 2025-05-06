@@ -1,11 +1,12 @@
 import { scanFeed } from "./utils/feed-scanner";
 import { removeInitialBloat } from "./utils/remove-initial-bloat";
 import { initializeScrollHandler } from "./utils/scroll-handler";
+
 // Remove unnecessary UI elements first
 removeInitialBloat();
 
 // Initial scan
-console.log("Starting to scan feed...");
+console.log("Linkedout: Starting to scan feed...");
 scanFeed();
 
 // Scan per scroll
