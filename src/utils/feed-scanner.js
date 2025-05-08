@@ -6,7 +6,7 @@ import {
 import { analyzePosts } from "./analyze-post";
 import { hidePost } from "./hide-post";
 import { updateStats } from "../stats/stats";
-import { removeAds } from "./remove-ads";
+import { removeAdPost } from "./remove-ad-post";
 import { locallyAnalyzePosts } from "./locally-analyze-post";
 
 // Set to store already checked post IDs
@@ -28,7 +28,7 @@ export async function scanFeed() {
     }
 
     // Remove ads before analysis
-    if (removeAds(post)) {
+    if (removeAdPost(post)) {
       return false;
     }
 
