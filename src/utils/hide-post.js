@@ -22,7 +22,6 @@ export function hidePost(post, category = "unspecified") {
     </div>
   `;
 
-  // Add event listener to restore button
   const showButton = overlay.querySelector(".linkedout-show-post");
   showButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -30,10 +29,8 @@ export function hidePost(post, category = "unspecified") {
     overlay.remove();
   });
 
-  // Add overlay to post
   post.appendChild(overlay);
 
-  // Add styles if not already added
   if (!document.getElementById("linkedout-styles")) {
     const style = document.createElement("style");
     style.id = "linkedout-styles";

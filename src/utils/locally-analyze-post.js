@@ -9,7 +9,7 @@ import { postDescriptionSelector } from "../data/selectors";
 export async function locallyAnalyzePosts(posts) {
   try {
     // Get filter preferences
-    const { filters = {} } = await chrome.storage.sync.get("filters");
+    // const { filters = {} } = await chrome.storage.sync.get("filters");
 
     // Extract text content and analyze each post
     return posts.map((post) => {
@@ -18,10 +18,8 @@ export async function locallyAnalyzePosts(posts) {
 
       // Check each category's keywords if the filter is enabled
       for (const [category, keywords] of Object.entries(filtrationKeywords)) {
-        // Skip if this filter is disabled
-        if (filters[category]?.enabled === false) continue;
+        // if (filters[category]?.enabled === false) continue;
 
-        // Check if any keyword matches
         const matches = keywords.some((keyword) =>
           postText.includes(keyword.toLowerCase())
         );
@@ -37,7 +35,6 @@ export async function locallyAnalyzePosts(posts) {
         }
       }
 
-      // If no matches found, don't hide the post
       return {
         post,
         shouldHide: false,
@@ -46,7 +43,8 @@ export async function locallyAnalyzePosts(posts) {
     });
   } catch (error) {
     console.error("Error analyzing posts locally:", error);
-    // In case of error, return all posts as not to be hidden
+
+    // In case of error, don't hide any posts
     return posts.map((post) => ({
       post,
       shouldHide: false,

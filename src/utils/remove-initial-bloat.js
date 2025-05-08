@@ -7,8 +7,6 @@ export function removeInitialBloat() {
     // Remove ad banner container
     const adBanner = document.querySelector(".ad-banner-container");
     adBanner?.remove();
-
-    // More elements can be added here in the future
   } catch (error) {
     console.error("Error removing initial bloat:", error);
   }

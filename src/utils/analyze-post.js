@@ -7,16 +7,14 @@ import { postDescriptionSelector } from "../data/selectors";
  */
 export async function analyzePosts(posts) {
   try {
-    // Extract text content from all posts
     const postsData = posts.map((post) => {
       const descriptionDiv = post.querySelector(postDescriptionSelector);
-      const postText = descriptionDiv?.innerText?.slice(0, 500) || "";
-      return { post, text: postText };
+      const descriptionText = descriptionDiv?.innerText?.slice(0, 500) || "";
+      return { post, text: descriptionText };
     });
 
     console.log(`Linkedout: Analyzing ${posts.length} posts`);
 
-    // Send message to background script
     const results = await chrome.runtime.sendMessage({
       type: "ANALYZE_POSTS",
       posts: postsData.map((p) => p.text),
@@ -26,7 +24,6 @@ export async function analyzePosts(posts) {
       throw new Error(results.error);
     }
 
-    // Map results back to posts
     return postsData.map((postData, index) => ({
       post: postData.post,
       shouldHide: results[index]?.shouldHide || false,
@@ -34,7 +31,8 @@ export async function analyzePosts(posts) {
     }));
   } catch (error) {
     console.error("Error analyzing posts:", error);
-    // In case of error, return all posts as not to be hidden
+
+    // In case of error, don't hide any posts
     return posts.map((post) => ({
       post,
       shouldHide: false,

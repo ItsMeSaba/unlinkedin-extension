@@ -9,8 +9,8 @@ export function removeAds(post) {
   const metadata = post.querySelector(postMetadataSelector);
 
   if (metadata?.innerText?.includes("Promoted")) {
-    console.log("Removing AD");
     post.remove();
+
     return true;
   }
 
