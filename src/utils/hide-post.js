@@ -41,7 +41,8 @@ export function hidePost(post, category = "unspecified") {
         left: 0;
         right: 0;
         bottom: 0;
-        background: #f3f6f8;
+        // background: #f3f6f8;
+        background: rgb(27, 31, 35);
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -54,11 +55,12 @@ export function hidePost(post, category = "unspecified") {
         align-items: center;
         gap: 12px;
         padding: 16px;
-        max-width: 90%;
+        width: 100%;
+        max-width: 95%;
       }
 
       .linkedout-removal-icon {
-        font-size: 24px;
+        font-size: 36px;
       }
 
       .linkedout-removal-text {
@@ -67,12 +69,14 @@ export function hidePost(post, category = "unspecified") {
 
       .linkedout-removal-text p {
         margin: 0;
-        color: #666;
+        // color: #666;
+        color: #fff;
       }
 
       .linkedout-removal-text p:first-child {
         font-weight: 600;
-        color: #333;
+        // color: #333;
+        color: #fff;
       }
 
       .linkedout-removal-reason {
