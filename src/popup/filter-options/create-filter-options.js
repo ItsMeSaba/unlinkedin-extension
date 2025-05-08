@@ -34,10 +34,15 @@ export async function createFilterOptions() {
     filterOptionsElement.appendChild(filterElement);
 
     // Add change listener
-    const checkbox = filterElement.querySelector(`#${id}`);
+    const checkbox = filterElement?.querySelector(`input`);
+
     checkbox?.addEventListener("change", async (e) => {
-      const { filters } = await chrome.storage.sync.get("filters");
+      const { filters = defaultFilters } = await chrome.storage.sync.get(
+        "filters"
+      );
+
       filters[id].enabled = e.target.checked;
+
       await chrome.storage.sync.set({ filters });
     });
   });

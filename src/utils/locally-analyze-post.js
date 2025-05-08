@@ -1,3 +1,4 @@
+import { defaultFilters } from "../data/default-filters";
 import filtrationKeywords from "../data/filtration-keywords.json";
 import { postDescriptionSelector } from "../data/selectors";
 
@@ -8,8 +9,9 @@ import { postDescriptionSelector } from "../data/selectors";
  */
 export async function locallyAnalyzePosts(posts) {
   try {
-    // Get filter preferences
-    // const { filters = {} } = await chrome.storage.sync.get("filters");
+    const { filters = defaultFilters } = await chrome.storage.sync.get(
+      "filters"
+    );
 
     // Extract text content and analyze each post
     return posts.map((post) => {
@@ -18,13 +20,11 @@ export async function locallyAnalyzePosts(posts) {
 
       // Check each category's keywords if the filter is enabled
       for (const [category, keywords] of Object.entries(filtrationKeywords)) {
-        // if (filters[category]?.enabled === false) continue;
+        if (filters[category]?.enabled === false) continue;
 
         const matches = keywords.some((keyword) =>
           postText.includes(keyword.toLowerCase())
         );
-
-        console.log("locallyAnalyzePosts");
 
         if (matches) {
           return {
