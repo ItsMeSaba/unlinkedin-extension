@@ -29,9 +29,11 @@ export function updateStats(analyzedCount, hiddenCount) {
 
   const button =
     document.getElementById("linkedout-stats") || createStatsButton();
+
   button.querySelector(
     ".stats"
   ).textContent = `A: ${stats.analyzed} H: ${stats.hidden}`;
+
   button.title = `LinkedOut Stats\nAnalyzed: ${stats.analyzed} posts\nHidden: ${stats.hidden} posts`;
 }
 

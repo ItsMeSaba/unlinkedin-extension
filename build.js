@@ -5,7 +5,11 @@ const isWatch = process.argv.includes("--watch");
 
 /** @type {import('esbuild').BuildOptions} */
 const buildOptions = {
-  entryPoints: ["src/index.js", "src/background.js", "src/popup.js"],
+  entryPoints: [
+    "src/index.js",
+    "src/background/background.js",
+    "src/popup/popup.js",
+  ],
   bundle: true,
   outdir: "dist",
   format: "iife",

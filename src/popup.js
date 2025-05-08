@@ -1,3 +1,0 @@
-import { getUserInfo, getAuthToken, logout } from "./utils/auth";
-
-// ... existing code ...
