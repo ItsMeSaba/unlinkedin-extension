@@ -8,6 +8,13 @@
         padding: 16px;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Oxygen, Ubuntu, Cantarell, sans-serif;
+        margin: 0;
+      }
+
+      #container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
       }
 
       h1 {
@@ -20,6 +27,69 @@
         font-size: 14px;
         color: #666;
         margin: 0 0 16px 0;
+      }
+
+      .user-section {
+        padding: 16px;
+        background: #f3f6f8;
+        border-radius: 8px;
+        margin-bottom: 16px;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .user-details {
+        flex-grow: 1;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .user-email {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .auth-prompt {
+        text-align: center;
+      }
+
+      .signin-button, .signout-button {
+        background: #0a66c2;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        width: 100%;
+        transition: background-color 0.2s;
+      }
+
+      .signin-button:hover, .signout-button:hover {
+        background: #084e96;
+      }
+
+      .signout-button {
+        background: #666;
+      }
+
+      .signout-button:hover {
+        background: #444;
       }
 
       .filter-options {
@@ -93,11 +163,13 @@
     </style>
   </head>
   <body>
-    <h1>LinkedOut</h1>
-    <p>Choose which types of posts you want to filter out from your feed.</p>
+    <div id="container">
+      <h1>LinkedOut</h1>
+      <p>Choose which types of posts you want to filter out from your feed.</p>
 
-    <div class="filter-options" id="filterOptions">
-      <!-- Options will be populated by JavaScript -->
+      <div class="filter-options" id="filterOptions">
+        <!-- Options will be populated by JavaScript -->
+      </div>
     </div>
 
     <script src="../popup.js"></script>

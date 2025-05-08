@@ -5,8 +5,9 @@ import {
 } from "../data/selectors";
 import { analyzePosts } from "./analyze-post";
 import { hidePost } from "./hide-post";
-import { updateStats } from "./stats";
+import { updateStats } from "../stats/stats";
 import { removeAds } from "./remove-ads";
+import { locallyAnalyzePosts } from "./locally-analyze-post";
 
 // Set to store already checked post IDs
 const checkedPosts = new Set();
@@ -43,7 +44,8 @@ export async function scanFeed() {
   }
 
   // Analyze posts in batch
-  const results = await analyzePosts(newPosts);
+  // const results = await analyzePosts(newPosts);
+  const results = await locallyAnalyzePosts(newPosts);
 
   // Track how many posts were hidden
   let hiddenCount = 0;
