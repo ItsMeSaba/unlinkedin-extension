@@ -4,8 +4,18 @@
  * @param {string} category - The category/reason why post was hidden
  */
 export function hidePost(post, category = "unspecified") {
+  // Store original height and styles
+  const originalHeight = post.offsetHeight;
+  const originalStyles = {
+    height: post.style.height,
+    transition: post.style.transition,
+    overflow: post.style.overflow,
+  };
+
   // Ensure post has relative positioning for absolute overlay
   post.style.position = "relative";
+  post.style.maxHeight = "100px";
+  post.style.overflow = "hidden";
 
   // Create overlay element
   const overlay = document.createElement("div");
@@ -26,7 +36,13 @@ export function hidePost(post, category = "unspecified") {
   showButton.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    overlay.remove();
+
+    // Remove overlay after transition
+    setTimeout(() => {
+      post.style.maxHeight = "none";
+      post.style.overflow = originalStyles.overflow;
+      overlay.remove();
+    }, 300); // Match the transition duration
   });
 
   post.appendChild(overlay);
@@ -41,7 +57,6 @@ export function hidePost(post, category = "unspecified") {
         left: 0;
         right: 0;
         bottom: 0;
-        // background: #f3f6f8;
         background: rgb(27, 31, 35);
         border-radius: 8px;
         display: flex;
