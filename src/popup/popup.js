@@ -1,13 +1,13 @@
 import { createFilterOptions } from "./filter-options/create-filter-options";
-import { createUserSection } from "./user-account/create-user-section";
+import { initializeLanguagePreferences } from "./language-preferences";
 
 console.log("Popup.js loaded");
 
 // Initialize popup
 async function initializePopup() {
   console.log("Initializing popup");
-  // await Promise.all([createUserSection(), createFilterOptions()]);
-  await createFilterOptions();
+
+  await Promise.all([createFilterOptions(), initializeLanguagePreferences()]);
 }
 
 // Initialize when DOM is loaded

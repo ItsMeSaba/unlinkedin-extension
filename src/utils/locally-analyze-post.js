@@ -1,6 +1,7 @@
 import { defaultFilters } from "../data/default-filters";
 import { postDescriptionSelector } from "../data/selectors";
 import { getKeywordsByLanguage } from "./get-keywords-by-language";
+import { franc } from "franc";
 
 /**
  * Analyzes multiple posts using local keyword matching
@@ -9,14 +10,42 @@ import { getKeywordsByLanguage } from "./get-keywords-by-language";
  */
 export async function locallyAnalyzePosts(posts) {
   try {
-    const { filters = defaultFilters } = await chrome.storage.sync.get(
-      "filters"
-    );
+    // Get both filter and language preferences
+    const [
+      { filters = defaultFilters },
+      { languageFilter = { enabled: false, languages: {} } },
+    ] = await Promise.all([
+      chrome.storage.sync.get("filters"),
+      chrome.storage.sync.get("languageFilter"),
+    ]);
 
     // Extract text content and analyze each post
     return posts.map((post) => {
       const descriptionDiv = post.querySelector(postDescriptionSelector);
       const postText = (descriptionDiv?.innerText || "").toLowerCase();
+
+      // If language filter is enabled, check if post language is allowed
+      if (
+        languageFilter.enabled &&
+        Object.keys(languageFilter.languages).length > 0
+      ) {
+        const detectedLang = franc(postText);
+
+        // If language is detected and it's in our list
+        if (detectedLang && detectedLang !== "und") {
+          // If language is not in selected languages or is disabled, hide the post
+          if (
+            !languageFilter.languages[detectedLang] ||
+            languageFilter.languages[detectedLang] === false
+          ) {
+            return {
+              post,
+              shouldHide: true,
+              category: "Language Filter",
+            };
+          }
+        }
+      }
 
       // Try to get language-specific keywords first
       const languageKeywords = getKeywordsByLanguage(postText);

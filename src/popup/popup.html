@@ -160,6 +160,111 @@
       input:checked + .slider:before {
         transform: translateX(20px);
       }
+
+      .language-section {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #eee;
+      }
+
+      .language-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .language-input-container {
+        position: relative;
+        margin-bottom: 12px;
+      }
+
+      #languageInput {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      #languageAutocomplete {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
+
+      .autocomplete-item {
+        padding: 8px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .autocomplete-item:hover {
+        background: #f3f6f8;
+      }
+
+      .selected-languages {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .language-tag {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        background: #f3f6f8;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .language-tag .switch {
+        margin-left: 8px;
+      }
+
+      .language-tag-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .remove-language {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 4px;
+        font-size: 16px;
+        line-height: 1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .remove-language:hover {
+        background: #e3e3e3;
+        color: #333;
+      }
+
+      .no-languages {
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+        padding: 12px;
+        background: #f3f6f8;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
@@ -170,6 +275,27 @@
       <p>Choose which types of posts you want to filter out from your feed.</p>
 
       <div class="filter-options" id="filterOptions"></div>
+
+      <div class="language-section">
+        <div class="language-header">
+          <span class="filter-label">Only these languages</span>
+          <label class="switch">
+            <input type="checkbox" id="languageFilterToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="languageFilterContent" style="display: none;">
+          <div class="language-input-container">
+            <input type="text" id="languageInput" placeholder="Type to search languages...">
+            <div id="languageAutocomplete"></div>
+          </div>
+
+          <div id="selectedLanguages" class="selected-languages">
+            <div class="no-languages">No languages selected</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="./popup.js"></script>
