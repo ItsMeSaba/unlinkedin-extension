@@ -1,6 +1,6 @@
 import { defaultFilters } from "../data/default-filters";
-import filtrationKeywords from "../data/filtration-keywords.json";
 import { postDescriptionSelector } from "../data/selectors";
+import { getKeywordsByLanguage } from "./get-keywords-by-language";
 
 /**
  * Analyzes multiple posts using local keyword matching
@@ -18,8 +18,21 @@ export async function locallyAnalyzePosts(posts) {
       const descriptionDiv = post.querySelector(postDescriptionSelector);
       const postText = (descriptionDiv?.innerText || "").toLowerCase();
 
+      // Try to get language-specific keywords first
+      const languageKeywords = getKeywordsByLanguage(postText);
+
+      console.log("languageKeywords", languageKeywords);
+
+      if (!languageKeywords) {
+        return {
+          post,
+          shouldHide: false,
+          category: null,
+        };
+      }
+
       // Check each category's keywords if the filter is enabled
-      for (const [category, keywords] of Object.entries(filtrationKeywords)) {
+      for (const [category, keywords] of Object.entries(languageKeywords)) {
         if (filters[category]?.enabled === false) continue;
 
         const matches = keywords.some((keyword) =>
