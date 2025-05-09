@@ -8,9 +8,10 @@ import { hidePost } from "./hide-post";
 import { updateStats } from "../stats/stats";
 import { removeAdPost } from "./remove-ad-post";
 import { locallyAnalyzePosts } from "./locally-analyze-post";
+import { generatePostId } from "./generate-post-id";
 
 // Set to store already checked post IDs
-const checkedPosts = new Set();
+// const checkedPosts = new Set();
 
 export async function scanFeed() {
   console.log("Scanning feed...");
@@ -21,11 +22,13 @@ export async function scanFeed() {
 
   // Filter out already processed posts and ads
   const newPosts = Array.from(posts).filter((post) => {
-    const postId = generatePostId(post);
+    // const descriptionDiv = post.querySelector(postDescriptionSelector);
+    // const postText = descriptionDiv?.innerText || "";
+    // const postId = generatePostId(postText);
 
-    if (checkedPosts.has(postId)) {
-      return false;
-    }
+    // if (checkedPosts.has(postId)) {
+    //   return false;
+    // }
 
     // Remove ads before analysis
     if (removeAdPost(post)) {
@@ -33,7 +36,7 @@ export async function scanFeed() {
     }
 
     // Mark post as processed and remove class
-    checkedPosts.add(postId);
+    // checkedPosts.add(postId);
     post.classList.remove(postClassName);
     post.style.marginBottom = "8px";
     return true;
@@ -44,7 +47,6 @@ export async function scanFeed() {
   }
 
   // Analyze posts in batch
-  // const results = await analyzePosts(newPosts);
   const results = await locallyAnalyzePosts(newPosts);
 
   // Track how many posts were hidden
@@ -60,12 +62,4 @@ export async function scanFeed() {
 
   // Update stats with the number of posts analyzed and hidden
   updateStats(newPosts.length, hiddenCount);
-}
-
-// Generate a unique identifier for posts that don't have one
-function generatePostId(post) {
-  // Use post content or position as a unique identifier
-  const descriptionDiv = post.querySelector(postDescriptionSelector);
-  const postText = descriptionDiv?.innerText?.slice(0, 25) || "";
-  return `post-${postText}`;
 }
