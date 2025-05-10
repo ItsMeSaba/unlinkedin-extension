@@ -1,6 +1,6 @@
-const esbuild = require("esbuild");
-const fs = require("fs-extra");
-const { copy } = require("esbuild-plugin-copy");
+import esbuild from "esbuild";
+import fs from "fs-extra";
+import { copy } from "esbuild-plugin-copy";
 
 const isWatch = process.argv.includes("--watch");
 
@@ -19,7 +19,8 @@ const buildOptions = {
   // minify: true,
   sourcemap: true,
   loader: {
-    ".json": "copy",
+    // ".json": "copy",
+    ".json": "json",
     ".png": "copy",
     ".svg": "copy",
   },
