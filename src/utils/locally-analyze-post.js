@@ -65,10 +65,6 @@ export async function locallyAnalyzePosts(posts) {
       for (const [category, keywords] of Object.entries(languageKeywords)) {
         if (filters[category]?.enabled === false) continue;
 
-        //////////////////////////////////////////////////////////////
-        // const matches = keywords.some((keyword) =>
-        //   postText.includes(keyword.toLowerCase())
-        // );
         let matchedKeyword = null;
         const matches = keywords.some((keyword) => {
           const result = postText.includes(keyword.toLowerCase());
@@ -80,14 +76,13 @@ export async function locallyAnalyzePosts(posts) {
 
           return result;
         });
-        /////////////////////////////////////////////////////////////
 
         if (matches) {
           return {
             post,
             shouldHide: true,
             // category: `${category} - "${matchedKeyword}"`,
-            category: category,
+            category,
           };
         }
       }
