@@ -79,7 +79,7 @@ export const languages = {
   // uig: "Uighur",
   // hat: "Haitian", // English-based creole
   // khm: "Khmer",
-  // prs: "Dari",
+  prs: "Dari",
   // hil: "Hiligaynon",
   // sna: "Shona",
   tat: "Tatar",
