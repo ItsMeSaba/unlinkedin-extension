@@ -1,7 +1,6 @@
 import { scanFeed } from "./utils/feed-scanner";
 import { removeInitialBloat } from "./utils/remove-initial-bloat";
 import { initializeScrollHandler } from "./utils/scroll-handler";
-import { getAuthToken } from "./utils/auth";
 
 // Only initialize if user is authenticated
 async function initialize() {
