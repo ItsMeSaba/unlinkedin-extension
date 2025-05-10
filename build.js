@@ -16,7 +16,7 @@ const buildOptions = {
   outdir: "dist",
   format: "iife",
   target: ["chrome58", "firefox57"],
-  // minify: true,
+  minify: true,
   sourcemap: true,
   loader: {
     // ".json": "copy",
