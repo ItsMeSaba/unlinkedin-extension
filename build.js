@@ -33,31 +33,47 @@ const buildOptions = {
       },
       watch: isWatch,
     }),
+    copy({
+      resolveFrom: "cwd",
+      assets: {
+        from: ["./manifest.json"],
+        to: ["./dist/manifest.json"],
+      },
+      watch: isWatch,
+    }),
+    copy({
+      resolveFrom: "cwd",
+      assets: {
+        from: ["./src/popup/popup.html"],
+        to: ["./dist/src/popup/popup.html"],
+      },
+      watch: isWatch,
+    }),
   ],
 };
 
-// Copy static files
-async function copyStaticFiles() {
-  // Ensure dist directory exists
-  await fs.ensureDir("dist");
+// // Copy static files
+// async function copyStaticFiles() {
+//   // Ensure dist directory exists
+//   await fs.ensureDir("dist");
 
-  // Copy popup HTML
-  await fs.copy("src/popup", "dist/src/popup", {
-    filter: (src) => !src.endsWith(".js"), // Don't copy JS files, they'll be bundled
-  });
-}
+//   // Copy popup HTML
+//   await fs.copy("src/popup", "dist/src/popup", {
+//     filter: (src) => !src.endsWith(".js"), // Don't copy JS files, they'll be bundled
+//   });
+// }
 
 if (isWatch) {
   // Watch mode
   esbuild.context(buildOptions).then(async (context) => {
-    await copyStaticFiles();
+    // await copyStaticFiles();
     context.watch();
     console.log("Watching for changes...");
   });
 } else {
   // Single build
   esbuild.build(buildOptions).then(async () => {
-    await copyStaticFiles();
+    // await copyStaticFiles();
     console.log("Build complete");
   });
 }
