@@ -33,7 +33,11 @@ export async function locallyAnalyzePosts(posts) {
         const detectedLang = franc(postText);
 
         // If language is detected and it's in our list
-        if (detectedLang && detectedLang !== "und") {
+        if (
+          detectedLang &&
+          detectedLang !== "und" &&
+          !!languages[detectedLang]
+        ) {
           // If language is not in selected languages or is disabled, hide the post
           if (
             !languageFilter.languages[detectedLang] ||
@@ -51,8 +55,6 @@ export async function locallyAnalyzePosts(posts) {
       // Try to get language-specific keywords first
       const languageKeywords = getKeywordsByLanguage(postText);
 
-      console.log("languageKeywords", languageKeywords);
-
       if (!languageKeywords) {
         return {
           post,
@@ -68,7 +70,6 @@ export async function locallyAnalyzePosts(posts) {
         let matchedKeyword = null;
         const matches = keywords.some((keyword) => {
           const result = postText.includes(keyword.toLowerCase());
-          console.log("result", result, keyword);
 
           if (result) {
             matchedKeyword = keyword;
