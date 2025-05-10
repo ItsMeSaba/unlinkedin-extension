@@ -9,6 +9,7 @@ const buildOptions = {
     "src/index.js",
     "src/background/background.js",
     "src/popup/popup.js",
+    "manifest.json",
   ],
   bundle: true,
   outdir: "dist",
@@ -16,9 +17,11 @@ const buildOptions = {
   target: ["chrome58", "firefox57"],
   // minify: true,
   sourcemap: true,
-  // loader: {
-  //   ".json": "copy",
-  // },
+  loader: {
+    ".json": "copy",
+    ".png": "copy",
+    ".svg": "copy",
+  },
 };
 
 // Copy static files
