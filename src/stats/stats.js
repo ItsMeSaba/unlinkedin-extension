@@ -10,7 +10,7 @@ function createStatsButton() {
   button.id = "linkedout-stats";
   button.innerHTML = `
     <img src="${chrome.runtime.getURL(
-      "src/assets/linkedout-32.png"
+      "public/linkedout-32.png"
     )}" class="logo" alt="LinkedOut" />
     <span class="stats">A: ${stats.analyzed} H: ${stats.hidden}</span>
   `;

@@ -71,7 +71,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url && changeInfo.url.includes("linkedin.com/feed")) {
     chrome.scripting.executeScript({
       target: { tabId },
-      files: ["dist/index.js"],
+      files: ["/src/index.js"],
     });
   }
 });

@@ -1,5 +1,6 @@
 const esbuild = require("esbuild");
 const fs = require("fs-extra");
+const { copy } = require("esbuild-plugin-copy");
 
 const isWatch = process.argv.includes("--watch");
 
@@ -22,6 +23,16 @@ const buildOptions = {
     ".png": "copy",
     ".svg": "copy",
   },
+  plugins: [
+    copy({
+      resolveFrom: "cwd",
+      assets: {
+        from: ["./public/*"],
+        to: ["./dist/public"],
+      },
+      watch: isWatch,
+    }),
+  ],
 };
 
 // Copy static files
@@ -30,7 +41,7 @@ async function copyStaticFiles() {
   await fs.ensureDir("dist");
 
   // Copy popup HTML
-  await fs.copy("src/popup", "dist/popup", {
+  await fs.copy("src/popup", "dist/src/popup", {
     filter: (src) => !src.endsWith(".js"), // Don't copy JS files, they'll be bundled
   });
 }
