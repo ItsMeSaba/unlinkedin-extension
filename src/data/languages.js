@@ -26,7 +26,7 @@ export const languages = {
   ukr: "Ukrainian",
   kan: "Kannada",
   // mai: "Maithili",
-  mal: "Malayalam",
+  // mal: "Malayalam",
   pes: "Iranian Persian",
   mya: "Burmese",
   swh: "Swahili (individual language)",

@@ -2,6 +2,7 @@ import { defaultFilters } from "../data/default-filters";
 import { postDescriptionSelector } from "../data/selectors";
 import { getKeywordsByLanguage } from "./get-keywords-by-language";
 import { franc } from "franc";
+import { languages } from "../data/languages";
 
 /**
  * Analyzes multiple posts using local keyword matching
@@ -41,7 +42,7 @@ export async function locallyAnalyzePosts(posts) {
             return {
               post,
               shouldHide: true,
-              category: "Language Filter",
+              category: "Language Filter: " + languages[detectedLang],
             };
           }
         }
@@ -64,15 +65,29 @@ export async function locallyAnalyzePosts(posts) {
       for (const [category, keywords] of Object.entries(languageKeywords)) {
         if (filters[category]?.enabled === false) continue;
 
-        const matches = keywords.some((keyword) =>
-          postText.includes(keyword.toLowerCase())
-        );
+        //////////////////////////////////////////////////////////////
+        // const matches = keywords.some((keyword) =>
+        //   postText.includes(keyword.toLowerCase())
+        // );
+        let matchedKeyword = null;
+        const matches = keywords.some((keyword) => {
+          const result = postText.includes(keyword.toLowerCase());
+          console.log("result", result, keyword);
+
+          if (result) {
+            matchedKeyword = keyword;
+          }
+
+          return result;
+        });
+        /////////////////////////////////////////////////////////////
 
         if (matches) {
           return {
             post,
             shouldHide: true,
-            category,
+            // category: `${category} - "${matchedKeyword}"`,
+            category: category,
           };
         }
       }
