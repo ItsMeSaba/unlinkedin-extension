@@ -11,8 +11,6 @@ export function getKeywordsByLanguage(text) {
     // Detect language using franc
     const detectedLang = franc(text);
 
-    console.log("detectedLang", detectedLang);
-
     // If language detection failed or returned 'und' (undefined)
     if (!detectedLang || detectedLang === "und") {
       return null;

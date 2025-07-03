@@ -905,17 +905,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"linkedout@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "linkedout@workspace:."
-  dependencies:
-    esbuild: "npm:^0.20.1"
-    esbuild-plugin-copy: "npm:^2.1.1"
-    franc: "npm:^6.2.0"
-    fs-extra: "npm:^11.2.0"
-  languageName: unknown
-  linkType: soft
-
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -1426,6 +1415,17 @@ __metadata:
   checksum: 10c0/73e8ee3809041ca8b818efb141801a1004e3fc0002727f1531f4de613ea281b494a40909596dae4a042a4fb6cd385af5d4db2e137b1362e0e91384b828effd3a
   languageName: node
   linkType: hard
+
+"unlinkedin@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "unlinkedin@workspace:."
+  dependencies:
+    esbuild: "npm:^0.20.1"
+    esbuild-plugin-copy: "npm:^2.1.1"
+    franc: "npm:^6.2.0"
+    fs-extra: "npm:^11.2.0"
+  languageName: unknown
+  linkType: soft
 
 "which@npm:^2.0.1":
   version: 2.0.2

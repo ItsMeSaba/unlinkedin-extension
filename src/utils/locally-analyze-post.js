@@ -67,7 +67,7 @@ export async function locallyAnalyzePosts(posts) {
       for (const [category, keywords] of Object.entries(languageKeywords)) {
         if (filters[category]?.enabled === false) continue;
 
-        let matchedKeyword = null;
+        // let matchedKeyword = null;
         const matches = keywords.some((keyword) => {
           const result = postText.includes(keyword.toLowerCase());
 

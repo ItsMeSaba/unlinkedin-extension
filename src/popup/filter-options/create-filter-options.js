@@ -27,8 +27,6 @@ export async function createFilterOptions() {
   const { filters = defaultFilters } = await chrome.storage.sync.get("filters");
   const filterOptionsElement = document.getElementById("filterOptions");
 
-  console.log("Creating filter options", filters);
-
   Object.entries(filters).forEach(([id, option]) => {
     const filterElement = createFilterOption(id, option);
     filterOptionsElement.appendChild(filterElement);
