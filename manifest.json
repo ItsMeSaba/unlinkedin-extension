@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "LinkedOut - Post Filter",
+  "name": "UnlinkedIn - Post Filter",
   "version": "1.0",
   "description": "Hide flexing and job-hunting posts from LinkedIn.",
   "permissions": ["scripting", "activeTab", "storage"],
