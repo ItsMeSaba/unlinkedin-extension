@@ -7,12 +7,6 @@
 export function generatePostId(text) {
   if (!text) return "";
 
-  // Clean the text - remove extra spaces and special characters
-  // const cleanText = text
-  //   .replace(/[^\w\s]/g, "")
-  //   .replace(/\s+/g, " ")
-  //   .trim();
-
   // Get first 5 characters
   const firstFive = text.slice(0, 5);
 

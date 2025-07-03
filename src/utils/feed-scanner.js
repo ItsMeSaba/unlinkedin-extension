@@ -14,22 +14,12 @@ import { generatePostId } from "./generate-post-id";
 // const checkedPosts = new Set();
 
 export async function scanFeed() {
-  console.log("Scanning feed...");
+  console.log("UnlinkedIn: Scanning feed...");
 
   const posts = document.getElementsByClassName(postClassName);
 
-  console.log("posts", posts);
-
   // Filter out already processed posts and ads
   const newPosts = Array.from(posts).filter((post) => {
-    // const descriptionDiv = post.querySelector(postDescriptionSelector);
-    // const postText = descriptionDiv?.innerText || "";
-    // const postId = generatePostId(postText);
-
-    // if (checkedPosts.has(postId)) {
-    //   return false;
-    // }
-
     // Remove ads before analysis
     if (removeAdPost(post)) {
       return false;
