@@ -1,6 +1,6 @@
 {
   "name": "unlinkedin",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "LinkedIn feed filter extension",
   "type": "module",
   "main": "src/index.js",
